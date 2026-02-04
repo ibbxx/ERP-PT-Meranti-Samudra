@@ -68,39 +68,55 @@ export default function GuidePage() {
                         <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-white" />
                         <div className="space-y-2">
                             <div className="flex items-center gap-3">
-                                <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded">Stage 3: Execution</span>
-                                <span className="text-sm font-medium text-ink/40">PIC Ops & Field Support</span>
+                                <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded">Stage 3: Agency Operations</span>
+                                <span className="text-sm font-medium text-ink/40">Agency Team</span>
                             </div>
-                            <h3 className="text-lg font-bold text-ink">Operations & Service</h3>
+                            <h3 className="text-lg font-bold text-ink">Ship Handling & Clearance</h3>
                             <p className="text-ink/60 max-w-2xl">
-                                PIC Ops handles permits (Inaportnet/SPB). Field Support delivers needs (Fresh Water, Provisions).
-                                All activities are logged in the <strong>Ops Dashboard</strong>.
+                                <strong>Agency</strong> handles the vessel's legal entry/exit.
+                                PIC Ops manages <strong>Inaportnet</strong>, updates ETA/ATA, and secures the <strong>SPB (Port Clearance)</strong>.
                             </p>
                         </div>
                     </div>
 
                     {/* Step 4 */}
                     <div className="relative pl-8 md:pl-12">
-                        <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-white" />
+                        <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-orange-500 ring-4 ring-white" />
                         <div className="space-y-2">
                             <div className="flex items-center gap-3">
-                                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Stage 4: Funding</span>
-                                <span className="text-sm font-medium text-ink/40">Ops -> Finance</span>
+                                <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-2 py-1 rounded">Stage 4: Logistics</span>
+                                <span className="text-sm font-medium text-ink/40">Logistics & Field Support</span>
                             </div>
-                            <h3 className="text-lg font-bold text-ink">Fund Request (Cashflow)</h3>
+                            <h3 className="text-lg font-bold text-ink">Procurement & Delivery</h3>
                             <p className="text-ink/60 max-w-2xl">
-                                Ops team requests funds for operational costs. Finance verifies and disburses cash.
-                                <strong>Management Approval</strong> is required here (GM/Director) depending on the amount.
+                                <strong>Logistics</strong> compares 3 vendors for needs (Provisions/Spare Parts).
+                                Once approved, <strong>Field Support</strong> executes the delivery to the ship.
                             </p>
                         </div>
                     </div>
 
                     {/* Step 5 */}
                     <div className="relative pl-8 md:pl-12">
+                        <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-white" />
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Stage 5: Funding</span>
+                                <span className="text-sm font-medium text-ink/40">Finance Team</span>
+                            </div>
+                            <h3 className="text-lg font-bold text-ink">Fund Request & Cashflow</h3>
+                            <p className="text-ink/60 max-w-2xl">
+                                Ops and Logistics request funds for their activities. Finance verifies and disburses cash.
+                                <strong>Management Approval</strong> is required here (GM/Director) depending on the amount.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Step 6 */}
+                    <div className="relative pl-8 md:pl-12">
                         <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-purple-500 ring-4 ring-white" />
                         <div className="space-y-2">
                             <div className="flex items-center gap-3">
-                                <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded">Stage 5: Closing</span>
+                                <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded">Stage 6: Closing</span>
                                 <span className="text-sm font-medium text-ink/40">Finance -> Management</span>
                             </div>
                             <h3 className="text-lg font-bold text-ink">Final Invoice & Reporting</h3>
