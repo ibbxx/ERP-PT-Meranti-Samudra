@@ -43,7 +43,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [role, setRole] = useState("Guest");
   const [name, setName] = useState("Guest");
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  // Default to false for mobile-first approach. Desktop will override via CSS.
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -58,6 +59,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Close sidebar on route change for mobile
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       window.localStorage.removeItem("mps_session");
@@ -67,13 +73,28 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-sand/20">
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-ink/20 backdrop-blur-sm lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-white border-r border-ink/5 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
-        <div className="flex h-16 items-center px-6 border-b border-ink/5">
+        <div className="flex h-16 items-center justify-between px-6 border-b border-ink/5">
           <span className="font-display text-xl font-bold text-ink tracking-tight">Meranti ERP</span>
+          {/* Mobile Close Button */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-1 -mr-2 text-ink/40 hover:text-ink"
+          >
+            <Squares2X2Icon className="h-5 w-5" />
+          </button>
         </div>
 
         <nav className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-4rem)]">
@@ -90,8 +111,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${active
-                          ? "bg-ink text-white"
-                          : "text-ink/60 hover:bg-ink/5 hover:text-ink"
+                        ? "bg-ink text-white"
+                        : "text-ink/60 hover:bg-ink/5 hover:text-ink"
                         }`}
                     >
                       <item.icon className="h-5 w-5" />
@@ -128,12 +149,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-16 flex items-center justify-between px-6 bg-white/50 backdrop-blur border-b border-ink/5 lg:hidden">
           <span className="font-display font-bold text-ink">MPS</span>
-          <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="p-2 -mr-2 text-ink/60">
+          <button onClick={() => setSidebarOpen(true)} className="p-2 -mr-2 text-ink/60">
             <Squares2X2Icon className="h-6 w-6" />
           </button>
         </header>
 
-        <main className="flex-1 p-6 lg:p-10 overflow-x-hidden">
+        <main className="flex-1 p-4 lg:p-10 overflow-x-hidden">
           <div className="mx-auto max-w-6xl">
             {children}
           </div>

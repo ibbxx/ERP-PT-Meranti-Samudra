@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import AccessGate from "@/components/AccessGate";
 import Badge from "@/components/Badge";
 import type { BadgeTone } from "@/components/Badge";
@@ -14,10 +14,10 @@ import type {
   Call,
   CostCategory,
   CostItem,
-  ExternalParty,
+  CostItem,
   StatusStep
 } from "@/data/mock";
-import { approvalTargetForAmount, externalParties } from "@/data/mock";
+import { approvalTargetForAmount } from "@/data/mock";
 import { useCalls } from "@/hooks/useCalls";
 import { useApprovals } from "@/hooks/useApprovals";
 import { usePermission } from "@/hooks/usePermission";
@@ -76,21 +76,12 @@ export default function CallDetailPage({ params }: Params) {
 
   const [selectedStep, setSelectedStep] = useState<StatusStep>("SPK");
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
-  const [noteText, setNoteText] = useState("");
   const [costLabel, setCostLabel] = useState("");
   const [costAmount, setCostAmount] = useState("");
   const [costCategory, setCostCategory] = useState<CostCategory>("OPEX");
   const [costVendorId, setCostVendorId] = useState<string | undefined>(undefined);
   const [dailyReport, setDailyReport] = useState("");
   const [lastReportSent, setLastReportSent] = useState<string | null>(null);
-
-  const vendorOptions = useMemo<ExternalParty[]>(
-    () => externalParties.filter((party) => party.type === "VENDOR" || party.type === "SUB_AGENT"),
-    []
-  );
-  const vendorMap = useMemo(() => {
-    return new Map(externalParties.map((party) => [party.id, party.name]));
-  }, []);
 
   useEffect(() => {
     const found = calls.find((item) => item.id === params.id) ?? null;
@@ -312,7 +303,7 @@ export default function CallDetailPage({ params }: Params) {
                   header: "Action", accessor: (i) => (
                     <button
                       className="text-sm font-medium text-ink underline disabled:opacity-50"
-                      onClick={() => handleToggleDocument(i.key as any)}
+                      onClick={() => handleToggleDocument(i.key as keyof Call["documents"])}
                       disabled={!canUpdateDocuments}
                     >
                       {call.documents?.[i.key as keyof typeof call.documents] ? "Replace" : "Upload"}
@@ -331,7 +322,7 @@ export default function CallDetailPage({ params }: Params) {
                   <div className="grid gap-4 md:grid-cols-4">
                     <input className="input" placeholder="Item Name" value={costLabel} onChange={(e) => setCostLabel(e.target.value)} />
                     <input className="input" placeholder="Amount" value={costAmount} onChange={(e) => setCostAmount(e.target.value)} />
-                    <select className="input" value={costCategory} onChange={(e) => setCostCategory(e.target.value as any)}>
+                    <select className="input" value={costCategory} onChange={(e) => setCostCategory(e.target.value as CostCategory)}>
                       <option value="OPEX">OPEX</option>
                       <option value="COGS">COGS</option>
                     </select>

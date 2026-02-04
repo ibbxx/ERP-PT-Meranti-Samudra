@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
 import { useCalls } from "@/hooks/useCalls";
 import { useApprovals } from "@/hooks/useApprovals";
 import { useSession } from "@/lib/useSession";
@@ -31,10 +30,6 @@ export default function DashboardPage() {
   // Role-based data filtering
   const activeCalls = useMemo(() => calls.filter(c => c.statusStep !== "INVOICE"), [calls]);
   const pendingApprovals = useMemo(() => approvals.filter(a => a.status === "PENDING"), [approvals]);
-  const unpaidInvoices = useMemo(() =>
-    calls.flatMap(c => c.costs).filter(cost => cost.status === "PENDING"),
-    [calls]
-  );
 
   // View selection
   const isFinance = role === Roles.FINANCE;
@@ -48,7 +43,7 @@ export default function DashboardPage() {
       />
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-8">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
         <Card className="p-6">
           <div className="text-sm font-medium text-ink/60">Active Calls</div>
           <div className="mt-2 text-3xl font-bold text-ink">{activeCalls.length}</div>

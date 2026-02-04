@@ -3,19 +3,17 @@
 import { useMemo, useState } from "react";
 import AccessGate from "@/components/AccessGate";
 import Badge from "@/components/Badge";
-import Card from "@/components/Card";
 import Modal from "@/components/Modal";
 import PageHeader from "@/components/PageHeader";
 import Table from "@/components/Table";
 import type { ApprovalItem } from "@/data/mock";
 import { useApprovals } from "@/hooks/useApprovals";
 import { usePermission } from "@/hooks/usePermission";
-import { useSession } from "@/lib/useSession";
 import { Permissions } from "@/types/rbac";
 
 export default function ApprovalsPage() {
   const { approvals, updateApproval } = useApprovals();
-  const { role, canApproveSmall, canApproveLarge } = usePermission();
+  const { canApproveSmall, canApproveLarge } = usePermission();
 
   // Combine permission check
   const canApprove = canApproveSmall || canApproveLarge;

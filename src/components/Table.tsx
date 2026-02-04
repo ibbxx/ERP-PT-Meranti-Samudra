@@ -30,7 +30,7 @@ export default function Table<T>({
                     <thead className="border-b border-ink/5 bg-sand/20 text-xs font-bold uppercase tracking-wider text-ink/50">
                         <tr>
                             {columns.map((col, i) => (
-                                <th key={i} className={`px-6 py-4 ${col.className ?? ""}`}>
+                                <th key={i} className={`px-4 py-3 sm:px-6 sm:py-4 ${col.className ?? ""}`}>
                                     {col.header}
                                 </th>
                             ))}
@@ -44,7 +44,7 @@ export default function Table<T>({
                                 className={`group transition-colors ${onRowClick ? "cursor-pointer hover:bg-ink/5" : ""}`}
                             >
                                 {columns.map((col, i) => (
-                                    <td key={i} className={`px-6 py-4 align-top ${col.className ?? ""}`}>
+                                    <td key={i} className={`px-4 py-3 sm:px-6 sm:py-4 align-top ${col.className ?? ""}`}>
                                         {col.accessor(item)}
                                     </td>
                                 ))}
@@ -52,7 +52,7 @@ export default function Table<T>({
                         ))}
                         {data.length === 0 && (
                             <tr>
-                                <td colSpan={columns.length} className="px-6 py-12 text-center text-ink/40">
+                                <td colSpan={columns.length} className="px-4 py-8 sm:px-6 sm:py-12 text-center text-ink/40">
                                     {emptyMessage}
                                 </td>
                             </tr>
