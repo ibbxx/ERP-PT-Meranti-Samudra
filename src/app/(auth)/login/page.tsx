@@ -5,124 +5,135 @@ import { useState } from "react";
 import type { Role } from "@/types/rbac";
 import { roleOptions } from "@/types/rbac";
 import { writeSession } from "@/lib/session";
-
-const roleDescriptions: Record<Role, string> = {
-  DIRECTOR: "Approve large opex/cogs and view strategic reports.",
-  GM: "Full operational view with approvals and client coordination.",
-  OPERATION_HEAD: "Ops dashboard, documents, and daily reporting.",
-  PIC_OPS: "ETA/ATA updates, needs request, and document handling.",
-  ADMIN_OPS: "Memorandum updates, daily reports, time sheet/NOR.",
-  FIELD_SUPPORT: "Field tasks and delivery status updates.",
-  FINANCE: "Cashflow, fund requests, and cost control.",
-  ADMIN_FINANCE: "Financial reports, tax, invoice archive, outstanding.",
-  COMMERCIAL_ADMIN: "Draft offers, SPK, and invoice/cost attachments.",
-  ADMIN_LOGISTICS: "Logistics procurement, vendor compare, delivery."
-};
+import { roleData, getRoleDefinition } from "@/lib/roleData";
+import { CheckCircleIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [selectedRole, setSelectedRole] = useState<Role>(roleOptions[0].value);
+  const [selectedRole, setSelectedRole] = useState<Role>("GM");
   const [name, setName] = useState("");
+
+  const activeRole = getRoleDefinition(selectedRole);
 
   const handleLogin = () => {
     const trimmed = name.trim();
     if (!trimmed) return;
     writeSession({ role: selectedRole, name: trimmed });
-    router.push("/dashboard");
+
+    // Redirect to specific landing page
+    router.push(activeRole.landingPage);
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center gap-10 px-6 py-12 lg:flex-row">
-        <div
-          className="flex-1 space-y-6 animate-fade-up"
-          style={{ animationDelay: "40ms" }}
-        >
-          <div className="inline-flex items-center gap-3 rounded-full border border-white/70 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-ink/60 shadow-soft">
-            Demo Mode · No real backend
-          </div>
-          <h1 className="max-w-xl font-display text-4xl text-ink md:text-5xl">
-            Meranti Prima Samudra
-            <span className="block text-ocean">ERP Experience Lab</span>
-          </h1>
-          <p className="max-w-xl text-lg text-ink/70">
-            Clickable prototype to showcase sales calls, approvals, and GM-level
-            insights. Built for a fast demo in the browser using local state and
-            dummy data.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              "GM cockpit: pipeline + approvals",
-              "Unified call tracking",
-              "Clean handoff to operations",
-              "Pricing and credit controls"
-            ].map((item) => (
-              <div key={item} className="card p-4 text-sm text-ink/70">
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div
-          className="w-full max-w-md animate-fade-up"
-          style={{ animationDelay: "140ms" }}
-        >
-          <div className="card-solid space-y-6 p-8">
-            <div>
-              <p className="text-sm uppercase tracking-[0.25em] text-ink/40">
-                Mock Login
-              </p>
-              <h2 className="font-display text-2xl text-ink">
-                Select your role
-              </h2>
+    <div className="min-h-screen bg-sand/20 flex items-center justify-center p-4 lg:p-8">
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+
+        {/* Left Column: Login Form */}
+        <div className="space-y-8 animate-fade-up">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ink/5 border border-ink/10 text-xs font-semibold tracking-wider uppercase text-ink/60 mb-6">
+              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+              ERP Experience Lab
             </div>
-            <div className="space-y-3">
-              <label className="block text-xs font-semibold uppercase tracking-[0.2em] text-ink/40">
-                Your name
-              </label>
+            <h1 className="font-display text-4xl lg:text-5xl font-bold text-ink mb-4">
+              Meranti Prima Samudra
+            </h1>
+            <p className="text-lg text-ink/60 leading-relaxed">
+              Login to access the integrated ERP system. Experience how operations, finance, and management flow together seamlessly.
+            </p>
+          </div>
+
+          <div className="card bg-white p-6 lg:p-8 shadow-xl shadow-ink/5 border-ink/5 space-y-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-ink/40">Select Role</label>
+              <select
+                className="input w-full bg-sand/10 border-ink/10 text-lg font-medium"
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value as Role)}
+              >
+                {roleData.map((role) => (
+                  <option key={role.id} value={role.id}>
+                    {role.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-ink/40">Your Name</label>
               <input
-                className="input"
-                placeholder="e.g. Arif Pratama"
+                className="input w-full bg-sand/10 border-ink/10"
+                placeholder="Enter your name..."
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
               />
             </div>
-            <div className="space-y-3">
-              {roleOptions.map((role) => {
-                const active = selectedRole === role.value;
-                return (
-                  <button
-                    key={role.value}
-                    type="button"
-                    onClick={() => setSelectedRole(role.value)}
-                    className={`w-full rounded-2xl border px-4 py-3 text-left transition ${
-                      active
-                        ? "border-ink bg-ink text-white shadow-glow"
-                        : "border-ink/10 bg-white/90 text-ink/70 hover:border-ink/30"
-                    }`}
-                  >
-                    <div className="text-sm font-semibold tracking-[0.08em]">
-                      {role.label}
-                    </div>
-                    <div className="text-xs opacity-80">
-                      {roleDescriptions[role.value]}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+
             <button
-              className="btn-primary w-full"
+              className={`btn-primary w-full py-4 text-base flex items-center justify-center gap-2 group ${activeRole.color}`}
               onClick={handleLogin}
               disabled={!name.trim()}
             >
-              Enter Dashboard
+              <span>Login as {activeRole.label}</span>
+              <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-xs text-ink/50">
-              Tip: role is stored in localStorage for demo continuity.
-            </p>
           </div>
         </div>
+
+        {/* Right Column: Role Preview Card */}
+        <div className="relative animate-fade-up" style={{ animationDelay: "100ms" }}>
+          <div className="absolute -inset-4 bg-gradient-to-tr from-white/0 via-white/50 to-white/0 rounded-[2rem] -z-10 blur-2xl" />
+
+          <div className="bg-white rounded-[2rem] border border-ink/5 shadow-2xl shadow-ink/10 overflow-hidden transition-all duration-300">
+            {/* Header */}
+            <div className={`p-8 ${activeRole.color} text-white relative overflow-hidden transition-colors duration-300`}>
+              <div className="absolute top-0 right-0 p-12 opacity-10">
+                <activeRole.icon className="w-64 h-64 -translate-y-12 translate-x-12" />
+              </div>
+              <div className="relative z-10">
+                <div className="p-3 bg-white/20 backdrop-blur-md rounded-xl w-fit mb-6">
+                  <activeRole.icon className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-3xl font-display font-bold mb-2">{activeRole.label}</h2>
+                <p className="text-white/80 text-lg">{activeRole.description}</p>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-8 space-y-8">
+              {/* Responsibilities */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-ink/40 mb-4">Key Responsibilities</h3>
+                <div className="space-y-3">
+                  {activeRole.responsibilities.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <CheckCircleIcon className={`w-5 h-5 shrink-0 mt-0.5 ${activeRole.color.replace('bg-', 'text-')}`} />
+                      <span className="text-ink/80">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Connections */}
+              <div className="bg-sand/10 rounded-xl p-6 border border-ink/5">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-ink/40 mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-ink/40" />
+                  Connected Workflow
+                </h3>
+                <div className="space-y-2">
+                  {activeRole.connections.map((item, i) => (
+                    <p key={i} className="text-sm text-ink/60 flex items-center gap-2">
+                      <span className="w-px h-3 bg-ink/20" />
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
