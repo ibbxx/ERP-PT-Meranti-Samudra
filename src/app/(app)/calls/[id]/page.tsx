@@ -14,7 +14,6 @@ import type {
   Call,
   CostCategory,
   CostItem,
-  CostItem,
   StatusStep
 } from "@/data/mock";
 import { approvalTargetForAmount } from "@/data/mock";
