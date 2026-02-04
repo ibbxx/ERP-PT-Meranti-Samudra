@@ -15,8 +15,7 @@ export default function ApprovalsPage() {
   const { approvals, updateApproval } = useApprovals();
   const { canApproveSmall, canApproveLarge } = usePermission();
 
-  // Combine permission check
-  const canApprove = canApproveSmall || canApproveLarge;
+
 
   const [selectedApproval, setSelectedApproval] = useState<ApprovalItem | null>(null);
 
@@ -59,15 +58,29 @@ export default function ApprovalsPage() {
                 { header: "Submitted", accessor: (a) => a.createdAt },
                 {
                   header: "Action",
-                  accessor: (a) => (
-                    <button
-                      className="btn-primary py-1 px-3 text-xs"
-                      onClick={() => setSelectedApproval(a)}
-                      disabled={!canApprove}
-                    >
-                      Review
-                    </button>
-                  )
+                  accessor: (a) => {
+                    const isDirectorOnly = a.amount > 5_000_000;
+                    const canApproveThis = canApproveLarge || (canApproveSmall && !isDirectorOnly);
+
+                    if (!canApproveThis) {
+                      return (
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-ink/40 bg-ink/5 px-2 py-1 rounded">
+                            Requires Director
+                          </span>
+                        </div>
+                      )
+                    }
+
+                    return (
+                      <button
+                        className="btn-primary py-1 px-3 text-xs"
+                        onClick={() => setSelectedApproval(a)}
+                      >
+                        Review
+                      </button>
+                    );
+                  }
                 }
               ]}
               emptyMessage="No pending approvals found."
