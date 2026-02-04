@@ -3,224 +3,296 @@
 import PageHeader from "@/components/PageHeader";
 import { roleData } from "@/lib/roleData";
 import {
-    CheckCircleIcon,
     BookOpenIcon,
-    LifebuoyIcon
+    CubeTransparentIcon,
+    DocumentTextIcon,
+    BanknotesIcon,
+    TruckIcon,
+    UserGroupIcon
 } from "@heroicons/react/24/outline";
 
 export default function GuidePage() {
     return (
-        <section className="space-y-20 pb-24 max-w-5xl mx-auto">
-            {/* Hero */}
-            <div className="space-y-6 text-center pt-8">
-                <div className="mx-auto w-16 h-16 rounded-2xl bg-ink/5 flex items-center justify-center text-ink/40 mb-6">
-                    <BookOpenIcon className="w-8 h-8" />
+        <section className="space-y-16 pb-32 max-w-5xl mx-auto text-ink">
+
+            {/* HEADER */}
+            <div className="space-y-6 pt-8 border-b border-ink/10 pb-10">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-ink text-white flex items-center justify-center">
+                        <BookOpenIcon className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-display font-bold text-ink">
+                            ERP Operational Manual
+                        </h1>
+                        <p className="text-lg text-ink/50 mt-1">
+                            PT Meranti Prima Samudra
+                        </p>
+                    </div>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-display font-bold text-ink">
-                    Operational Manual
-                </h1>
-                <p className="text-xl leading-relaxed text-ink/50 max-w-2xl mx-auto">
-                    The definitive guide to the PT MPS ecosystem. <br />
-                    From commercial initiation to financial closing.
+                <p className="text-base leading-relaxed text-ink/70 max-w-3xl">
+                    This document serves as the single source of truth for the PT MPS Enterprise Resource Planning (ERP) system.
+                    It details the end-to-end workflows connecting Commercial, Operational, Logistics, and Financial divisions
+                    into a unified "Port Call" lifecycle.
                 </p>
             </div>
 
-            <hr className="border-ink/5" />
-
-            {/* 1. The Core Lifecycle (Vertical Minimalist) */}
-            <div className="space-y-12">
-                <div className="flex items-end justify-between border-b border-ink/5 pb-4">
-                    <h2 className="text-2xl font-display font-bold text-ink">The Port Call Lifecycle</h2>
-                    <span className="text-sm font-mono text-ink/40 uppercase tracking-widest">6 Stages</span>
-                </div>
-
-                <div className="relative space-y-0 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-ink/10 before:to-transparent">
-
-                    {/* Stage 1 */}
-                    <TimelineItem
-                        step="01"
-                        title="Commercial"
-                        subtitle="Sales & Inquiry"
-                        color="text-rose-600"
-                        bg="bg-rose-50"
-                    >
-                        <p>
-                            The journey begins with an <strong>Inquiry</strong>. Commercial Admin drafts an <strong>Offer (Penawaran)</strong> estimating the PDA.
-                            Once agreed, the client sends a nomination.
-                        </p>
-                    </TimelineItem>
-
-                    {/* Stage 2 */}
-                    <TimelineItem
-                        step="02"
-                        title="Appointment"
-                        subtitle="SPK Generation"
-                        color="text-rose-600"
-                        bg="bg-rose-50"
-                    >
-                        <p>
-                            Upon verification, an <strong>SPK (Surat Perintah Kerja)</strong> is issued.
-                            The system officially creates a "Call" entity, assigning a unique Reference Number (e.g., <em>MPS-SUB-24-001</em>).
-                        </p>
-                    </TimelineItem>
-
-                    {/* Stage 3 */}
-                    <TimelineItem
-                        step="03"
-                        title="Agency Ops"
-                        subtitle="Permits & Clearance"
-                        color="text-blue-600"
-                        bg="bg-blue-50"
-                    >
-                        <p>
-                            <strong>Critical Phase.</strong> Agency team manages <strong>Inaportnet</strong> clearance.
-                            PIC Ops secures the <strong>SPB (Port Clearance)</strong> and updates live vessel movements (ETA/ATA).
-                        </p>
-                    </TimelineItem>
-
-                    {/* Stage 4 */}
-                    <TimelineItem
-                        step="04"
-                        title="Logistics"
-                        subtitle="Procurement"
-                        color="text-orange-600"
-                        bg="bg-orange-50"
-                    >
-                        <p>
-                            Logistics team receives requisitions. A <strong>Vendor Compare</strong> (3 quotes) is mandatory for provisions/spares.
-                            Field Support executes the delivery to the vessel.
-                        </p>
-                    </TimelineItem>
-
-                    {/* Stage 5 */}
-                    <TimelineItem
-                        step="05"
-                        title="Funding"
-                        subtitle="Disbursement"
-                        color="text-emerald-600"
-                        bg="bg-emerald-50"
-                    >
-                        <p>
-                            Operational costs require funding.
-                            <span className="block mt-2 p-3 bg-ink/5 rounded text-sm text-ink/70 border-l-2 border-emerald-500">
-                                <strong>Rule:</strong> Requests &gt; 5 Juta require Director approval. Below that, GM approval suffices.
-                            </span>
-                        </p>
-                    </TimelineItem>
-
-                    {/* Stage 6 */}
-                    <TimelineItem
-                        step="06"
-                        title="Closing"
-                        subtitle="Financial Reporting"
-                        color="text-purple-600"
-                        bg="bg-purple-50"
-                    >
-                        <p>
-                            Post-departure, all costs are reconciled (FDA).
-                            Finance sends the <strong>Final Invoice</strong>. Management reviews the P&L statement.
-                        </p>
-                    </TimelineItem>
-
-                </div>
-            </div>
-
-            <hr className="border-ink/5" />
-
-            {/* 2. System Intelligence */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-8">
-                    <h2 className="text-xl font-display font-bold text-ink">Glossary</h2>
-                    <dl className="space-y-6">
-                        {[
-                            { term: "PDA", desc: "Proforma Disbursement Account. Estimated cost sent to client." },
-                            { term: "FDA", desc: "Final Disbursement Account. Actual billed cost." },
-                            { term: "SPB", desc: "Surat Persetujuan Berlayar. Mandatory sailing permit." },
-                            { term: "COGS", desc: "Cost of Goods Sold. Direct operational expenses." },
-                        ].map((item) => (
-                            <div key={item.term}>
-                                <dt className="font-mono text-xs font-bold text-ink uppercase tracking-wider mb-1">{item.term}</dt>
-                                <dd className="text-sm text-ink/60">{item.desc}</dd>
-                            </div>
-                        ))}
-                    </dl>
-                </div>
-
-                <div className="space-y-8">
-                    <h2 className="text-xl font-display font-bold text-ink">Key Modules</h2>
-                    <ul className="space-y-4">
-                        <li className="flex gap-4">
-                            <LifebuoyIcon className="w-5 h-5 text-ink/30 shrink-0" />
-                            <div>
-                                <h4 className="font-bold text-ink text-sm">Ops Dashboard</h4>
-                                <p className="text-xs text-ink/50 mt-1">Real-time view of all active vessels and their current status steps.</p>
-                            </div>
-                        </li>
-                        <li className="flex gap-4">
-                            <LifebuoyIcon className="w-5 h-5 text-ink/30 shrink-0" />
-                            <div>
-                                <h4 className="font-bold text-ink text-sm">Approvals Center</h4>
-                                <p className="text-xs text-ink/50 mt-1">Centralized inbox for Management to review and sign off on fund requests.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr className="border-ink/5" />
-
-            {/* 3. Roles Grid */}
+            {/* CHAPTER 1: ARCHITECTURE */}
             <div className="space-y-8">
-                <h2 className="text-xl font-display font-bold text-ink">Role Architecture</h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {roleData.map((role) => (
-                        <div key={role.id} className="group p-5 rounded-xl border border-ink/5 hover:border-ink/20 transition-all bg-white hover:shadow-lg">
-                            <div className="flex items-center justify-between mb-3">
-                                <div className={`p-2 rounded-lg text-white ${role.color} opacity-90 group-hover:opacity-100 transition-opacity`}>
-                                    <role.icon className="w-5 h-5" />
-                                </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-ink/30">{role.id.replace('_', ' ')}</span>
+                <div className="flex items-center gap-3 mb-6">
+                    <CubeTransparentIcon className="w-6 h-6 text-ocean" />
+                    <h2 className="text-2xl font-display font-bold">Chapter 1: System Architecture</h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="prose prose-sm prose-ink">
+                        <h3 className="text-lg font-bold">The "Call" Entity</h3>
+                        <p>
+                            The core atomic unit of this ERP is the <strong>Call</strong> (Port Call). Every operational activity must be linked to a specific Call ID (e.g., <em>MPS-SUB-24-001</em>).
+                        </p>
+                        <ul className="list-disc pl-4 space-y-2 text-ink/70">
+                            <li><strong>Parent</strong>: The Vessel (Kapal).</li>
+                            <li><strong>Trigger</strong>: Created automatically when an SPK is generated.</li>
+                            <li><strong>Lifecycle</strong>: Has 6 strict stages that cannot be skipped.</li>
+                        </ul>
+                    </div>
+
+                    <div className="bg-sand/10 p-6 rounded-xl border border-ink/5">
+                        <h3 className="text-sm font-bold uppercase tracking-widest text-ink/40 mb-4">Data Hierarchy</h3>
+                        <div className="space-y-3 font-mono text-xs">
+                            <div className="flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-rose-500" />
+                                <span>Client (Principal)</span>
                             </div>
-                            <h3 className="font-bold text-ink mb-1">{role.label}</h3>
-                            <p className="text-xs text-ink/50 mb-4 line-clamp-2 h-8">
-                                {role.description}
-                            </p>
-                            <div className="space-y-1.5 border-t border-ink/5 pt-3">
-                                {role.responsibilities.slice(0, 3).map((task, i) => (
-                                    <div key={i} className="flex items-center gap-2 text-[11px] text-ink/70">
-                                        <CheckCircleIcon className="w-3 h-3 text-ink/30" />
-                                        <span className="truncate">{task}</span>
-                                    </div>
-                                ))}
+                            <div className="flex items-center gap-2 pl-4 border-l border-ink/10 ml-1">
+                                <span className="w-2 h-2 rounded-full bg-blue-500" />
+                                <span>Vessel (Ship)</span>
+                            </div>
+                            <div className="flex items-center gap-2 pl-8 border-l border-ink/10 ml-1">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                                <span><strong>Call (Port Visit)</strong></span>
+                            </div>
+                            <div className="flex items-center gap-2 pl-12 border-l border-ink/10 ml-1 opacity-60">
+                                <span className="w-1.5 h-1.5 rounded-full bg-ink" />
+                                <span>Fund Requests</span>
+                            </div>
+                            <div className="flex items-center gap-2 pl-12 border-l border-ink/10 ml-1 opacity-60">
+                                <span className="w-1.5 h-1.5 rounded-full bg-ink" />
+                                <span>Logistics PO</span>
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
             </div>
+
+            <hr className="border-ink/5" />
+
+            {/* CHAPTER 2: AGENCY WORKFLOW */}
+            <div className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                    <DocumentTextIcon className="w-6 h-6 text-rose-600" />
+                    <h2 className="text-2xl font-display font-bold">Chapter 2: Agency & Operations</h2>
+                </div>
+
+                <div className="space-y-6">
+                    <p className="text-ink/70 max-w-3xl">
+                        The Agency module manages the vessel's physical presence in the port.
+                        This workflow is heavily integrated with government systems like <strong>Inaportnet</strong>.
+                    </p>
+
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <CardSteps
+                            step="01"
+                            title="Pre-Arrival"
+                            points={[
+                                "Commercial Admin inputs PDA.",
+                                "Ops Admin creates 'Call' entry.",
+                                "Agent submits PKK (Pemberitahuan Kedatangan Kapal) to Inaportnet."
+                            ]}
+                        />
+                        <CardSteps
+                            step="02"
+                            title="Arrival & Berting"
+                            points={[
+                                "PIC Ops inputs 'Actual Time of Arrival' (ATA).",
+                                "Field Support delivers 'Fresh Water' & Provisions.",
+                                "Daily Reports are generated (status: ALONGSIDE)."
+                            ]}
+                        />
+                        <CardSteps
+                            step="03"
+                            title="Clearance & Departure"
+                            points={[
+                                "Ops Admin compiles cargo documents.",
+                                "Agent secures SPB (Sailing Permit).",
+                                "Final Departure Report (ATD) is triggered."
+                            ]}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <hr className="border-ink/5" />
+
+            {/* CHAPTER 3: LOGISTICS */}
+            <div className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                    <TruckIcon className="w-6 h-6 text-orange-600" />
+                    <h2 className="text-2xl font-display font-bold">Chapter 3: Logistics Chain</h2>
+                </div>
+
+                <div className="bg-white border border-ink/10 rounded-xl overflow-hidden">
+                    <table className="w-full text-sm text-left">
+                        <thead className="bg-ink/5 text-ink font-bold border-b border-ink/10">
+                            <tr>
+                                <th className="px-6 py-4">Status Step</th>
+                                <th className="px-6 py-4">Description</th>
+                                <th className="px-6 py-4">Required Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-ink/5">
+                            <tr className="hover:bg-sand/5">
+                                <td className="px-6 py-4 font-mono text-xs uppercase font-bold text-orange-600">REQUESTED</td>
+                                <td className="px-6 py-4">Crew/Ops request item (e.g., Spare Parts).</td>
+                                <td className="px-6 py-4">Admin Logistics verifies details.</td>
+                            </tr>
+                            <tr className="hover:bg-sand/5">
+                                <td className="px-6 py-4 font-mono text-xs uppercase font-bold text-orange-600">VENDOR_COMPARE</td>
+                                <td className="px-6 py-4"><strong>Mandatory Rule:</strong> Must compare 3 vendors.</td>
+                                <td className="px-6 py-4">Input prices from Vendor A, B, C. Select winner.</td>
+                            </tr>
+                            <tr className="hover:bg-sand/5">
+                                <td className="px-6 py-4 font-mono text-xs uppercase font-bold text-orange-600">FUND_SUBMIT</td>
+                                <td className="px-6 py-4">Request money to buy the item.</td>
+                                <td className="px-6 py-4">Auto-creates a 'Fund Request' for Finance.</td>
+                            </tr>
+                            <tr className="hover:bg-sand/5">
+                                <td className="px-6 py-4 font-mono text-xs uppercase font-bold text-orange-600">DELIVERING</td>
+                                <td className="px-6 py-4">Item bought and en-route to ship.</td>
+                                <td className="px-6 py-4">Field Support uploads Delivery Order (DO).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr className="border-ink/5" />
+
+            {/* CHAPTER 4: FINANCIAL CONTROL */}
+            <div className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                    <BanknotesIcon className="w-6 h-6 text-emerald-600" />
+                    <h2 className="text-2xl font-display font-bold">Chapter 4: Financial Control</h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-12">
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-bold">Tiered Approval Logic</h3>
+                        <p className="text-ink/70 text-sm leading-relaxed">
+                            To maintain cashflow security while ensuring operational speed, we implement a tiered approval system for all <strong>Fund Requests</strong>.
+                        </p>
+
+                        <div className="space-y-3 pt-2">
+                            <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-100">
+                                <div className="flex justify-between items-center mb-1">
+                                    <span className="font-bold text-emerald-800">General Manager</span>
+                                    <span className="text-xs font-mono bg-white px-2 py-1 rounded border border-emerald-200">≤ IDR 5,000,000</span>
+                                </div>
+                                <p className="text-xs text-emerald-700">Can approve routine operational costs (Fresh water, grab transport, small provisions).</p>
+                            </div>
+
+                            <div className="p-4 rounded-lg bg-purple-50 border border-purple-100">
+                                <div className="flex justify-between items-center mb-1">
+                                    <span className="font-bold text-purple-800">Director</span>
+                                    <span className="text-xs font-mono bg-white px-2 py-1 rounded border border-purple-200">Unlimited</span>
+                                </div>
+                                <p className="text-xs text-purple-700">Must approve all OPEX, large procurements, and non-routine expenses above 5 Million.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-bold">Request Categories</h3>
+                        <ul className="space-y-0 divide-y divide-ink/5 border-t border-b border-ink/5">
+                            <li className="py-3 flex justify-between text-sm">
+                                <span>OPERATIONAL</span>
+                                <span className="text-ink/50">Direct expenses for the vessel (Taxi, Boat, Meals).</span>
+                            </li>
+                            <li className="py-3 flex justify-between text-sm">
+                                <span>LOGISTICS</span>
+                                <span className="text-ink/50">Purchase of goods (Spare parts, Oil).</span>
+                            </li>
+                            <li className="py-3 flex justify-between text-sm">
+                                <span>OFFICE</span>
+                                <span className="text-ink/50">Internal office supplies (ATK, Coffee).</span>
+                            </li>
+                            <li className="py-3 flex justify-between text-sm">
+                                <span>SALLARY</span>
+                                <span className="text-ink/50">Payroll for freelance/daily workers.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr className="border-ink/5" />
+
+            {/* CHAPTER 5: ROLE MATRIX */}
+            <div className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                    <UserGroupIcon className="w-6 h-6 text-stone-600" />
+                    <h2 className="text-2xl font-display font-bold">Appendix: Role Matrix</h2>
+                </div>
+
+                <div className="overflow-x-auto">
+                    <table className="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th className="border-b border-ink/10 py-2 font-bold text-ink">Role</th>
+                                <th className="border-b border-ink/10 py-2 font-bold text-ink">Description</th>
+                                <th className="border-b border-ink/10 py-2 font-bold text-ink">Key Responsibilities</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {roleData.map((role) => (
+                                <tr key={role.id}>
+                                    <td className="py-3 border-b border-ink/5 pr-4 align-top font-bold text-ink/80 whitespace-nowrap">
+                                        {role.label}
+                                    </td>
+                                    <td className="py-3 border-b border-ink/5 pr-4 align-top text-ink/60 w-1/3">
+                                        {role.description}
+                                    </td>
+                                    <td className="py-3 border-b border-ink/5 align-top">
+                                        <div className="flex flex-wrap gap-1">
+                                            {role.responsibilities.map(r => (
+                                                <span key={r} className="px-2 py-0.5 rounded bg-ink/5 text-ink/70">{r}</span>
+                                            ))}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </section>
     );
 }
 
-function TimelineItem({ step, title, subtitle, color, bg, children }: any) {
+function CardSteps({ step, title, points }: any) {
     return (
-        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-            {/* Icon/Dot */}
-            <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-mono text-xs font-bold text-ink/40">
-                {step}
-            </div>
-
-            {/* Content Card */}
-            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-ink/5 bg-white hover:border-ink/20 transition-all shadow-sm">
-                <div className="flex items-center justify-between mb-2">
-                    <div className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded ${bg} ${color}`}>
-                        {title}
-                    </div>
-                    <span className="text-xs font-medium text-ink/30">{subtitle}</span>
-                </div>
-                <div className="text-sm text-ink/70 leading-relaxed">
-                    {children}
-                </div>
-            </div>
+        <div className="p-6 rounded-xl border border-ink/10 bg-white">
+            <div className="text-xs font-bold font-mono text-ink/30 mb-2">STAGE {step}</div>
+            <h3 className="font-bold text-ink mb-4 text-lg">{title}</h3>
+            <ul className="space-y-2">
+                {points.map((p: string, i: number) => (
+                    <li key={i} className="text-sm text-ink/60 flex gap-2">
+                        <span className="mt-1.5 w-1 h-1 rounded-full bg-ink/40 shrink-0" />
+                        {p}
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
