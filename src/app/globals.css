@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: 15 23 42;
+  --ocean: 14 116 144;
+  --sun: 245 158 11;
+  --copper: 234 88 12;
+  --sky: 6 95 116;
+  --sand: 248 244 235;
+  --mist: 232 243 244;
+  --pine: 21 94 84;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  color: rgb(var(--ink));
+  background-color: rgb(var(--sand));
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(14, 116, 144, 0.15), transparent 55%),
+    radial-gradient(circle at 85% 10%, rgba(245, 158, 11, 0.18), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(21, 94, 84, 0.18), transparent 45%),
+    linear-gradient(120deg, rgba(248, 244, 235, 0.9), rgba(248, 244, 235, 0.7));
+}
+
+::selection {
+  background: rgba(14, 116, 144, 0.25);
+}
+
+@layer components {
+  .card {
+    @apply rounded-3xl border border-white/80 bg-white/90 shadow-soft backdrop-blur;
+  }
+
+  .card-solid {
+    @apply rounded-3xl border border-white/60 bg-white shadow-raised;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink/80;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 bg-white px-4 py-2 text-sm font-semibold text-ink/80 transition hover:-translate-y-0.5 hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent px-3 py-2 text-sm font-semibold text-ink/60 transition hover:bg-ink/5 hover:text-ink;
+  }
+
+  .input {
+    @apply w-full rounded-2xl border border-ink/10 bg-white/80 px-4 py-2 text-sm shadow-sm outline-none transition focus:border-ocean/40 focus:ring-2 focus:ring-ocean/20;
+  }
+}
