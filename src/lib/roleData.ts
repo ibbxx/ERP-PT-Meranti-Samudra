@@ -7,7 +7,6 @@ import {
     DocumentTextIcon,
     WrenchScrewdriverIcon,
     CalculatorIcon,
-    ArchiveBoxIcon,
     UserGroupIcon
 } from "@heroicons/react/24/outline";
 import type { Role } from "@/types/rbac";
@@ -19,7 +18,7 @@ export type RoleDefinition = {
     responsibilities: string[];
     connections: string[]; // How this role connects to others
     landingPage: string;
-    icon: any;
+    icon: React.ComponentType<React.ComponentProps<"svg">>;
     color: string;
 };
 

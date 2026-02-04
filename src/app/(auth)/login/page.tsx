@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Role } from "@/types/rbac";
-import { roleOptions } from "@/types/rbac";
 import { writeSession } from "@/lib/session";
 import { roleData, getRoleDefinition } from "@/lib/roleData";
 import { CheckCircleIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
