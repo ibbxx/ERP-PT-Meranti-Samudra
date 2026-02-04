@@ -7,6 +7,7 @@ import Card from "@/components/Card";
 import PageShell from "@/components/PageShell";
 import Modal from "@/components/Modal";
 import { formatCurrency } from "@/lib/utils";
+import Table from "@/components/Table";
 import { useFundRequests } from "@/hooks/useFundRequests";
 import { usePermission } from "@/hooks/usePermission";
 import { Permissions, getRoleLabel } from "@/types/rbac";
@@ -105,71 +106,61 @@ export default function Page() {
             )}
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="text-xs uppercase tracking-wider text-ink/40 border-b border-ink/10">
-                <tr>
-                  <th className="px-4 py-3 text-left">No Request</th>
-                  <th className="px-4 py-3 text-left">Description</th>
-                  <th className="px-4 py-3 text-left">Category</th>
-                  <th className="px-4 py-3 text-left">Amount</th>
-                  <th className="px-4 py-3 text-left">Status</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-ink/5">
-                {requests.map((item) => (
-                  <tr key={item.id} className="hover:bg-ink/5 transition-colors">
-                    <td className="px-4 py-3 font-medium text-ink">{item.requestNo}</td>
-                    <td className="px-4 py-3 text-ink/80">
-                      <div>{item.description}</div>
-                      <div className="text-xs text-ink/40">{item.createdAt} by {item.requester}</div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge tone="neutral">{item.category}</Badge>
-                    </td>
-                    <td className="px-4 py-3 font-medium text-ink">
-                      {formatCurrency(item.amount)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge tone={
-                        item.status === "APPROVED" ? "success" :
-                          item.status === "PAID" ? "success" :
-                            item.status === "REJECTED" ? "danger" : "warning"
-                      }>
-                        {item.status}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      {item.status === "PENDING" && canApprove && (
-                        <button
-                          className="text-xs text-primary hover:underline font-semibold"
-                          onClick={() => setModal({ open: true, type: "APPROVE", data: item })}
-                        >
-                          Review
-                        </button>
-                      )}
-                      {item.status === "APPROVED" && role === "FINANCE" && (
-                        <button
-                          className="text-xs text-success hover:underline font-semibold"
-                          onClick={() => handlePaid(item)}
-                        >
-                          Mark Paid
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-                {requests.length === 0 && (
-                  <tr>
-                    <td colSpan={6} className="px-4 py-8 text-center text-ink/50">
-                      No fund requests found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <Table
+            data={requests}
+            keyExtractor={(item) => item.id}
+            columns={[
+              { header: "No Request", accessor: (item) => <span className="font-medium text-ink">{item.requestNo}</span> },
+              {
+                header: "Description",
+                accessor: (item) => (
+                  <div>
+                    <div>{item.description}</div>
+                    <div className="text-xs text-ink/40">{item.createdAt} by {item.requester}</div>
+                  </div>
+                )
+              },
+              { header: "Category", accessor: (item) => <Badge tone="neutral">{item.category}</Badge> },
+              { header: "Amount", accessor: (item) => formatCurrency(item.amount) },
+              {
+                header: "Status",
+                accessor: (item) => (
+                  <Badge tone={
+                    item.status === "APPROVED" ? "success" :
+                      item.status === "PAID" ? "success" :
+                        item.status === "REJECTED" ? "danger" : "warning"
+                  }>
+                    {item.status}
+                  </Badge>
+                )
+              },
+              {
+                header: "Actions",
+                accessor: (item) => (
+                  <div className="flex justify-end gap-2">
+                    {item.status === "PENDING" && canApprove && (
+                      <button
+                        className="text-xs text-primary hover:underline font-semibold"
+                        onClick={() => setModal({ open: true, type: "APPROVE", data: item })}
+                      >
+                        Review
+                      </button>
+                    )}
+                    {item.status === "APPROVED" && role === "FINANCE" && (
+                      <button
+                        className="text-xs text-success hover:underline font-semibold"
+                        onClick={() => handlePaid(item)}
+                      >
+                        Mark Paid
+                      </button>
+                    )}
+                  </div>
+                ),
+                className: "text-right"
+              }
+            ]}
+            emptyMessage="No fund requests found."
+          />
         </Card>
 
         {/* Create Modal */}

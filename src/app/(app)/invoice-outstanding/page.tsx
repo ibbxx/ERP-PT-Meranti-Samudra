@@ -6,6 +6,7 @@ import Badge from "@/components/Badge";
 import Card from "@/components/Card";
 import PageShell from "@/components/PageShell";
 import Modal from "@/components/Modal";
+import Table from "@/components/Table";
 import { formatCurrency } from "@/lib/utils";
 import { useInvoices } from "@/hooks/useInvoices";
 import type { EnrichedInvoice } from "@/hooks/useInvoices";
@@ -49,62 +50,57 @@ export default function Page() {
         <Card className="p-6">
           <h2 className="text-lg font-bold text-ink mb-6">Receivables Queue</h2>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="text-xs uppercase tracking-wider text-ink/40 border-b border-ink/10">
-                <tr>
-                  <th className="px-4 py-3 text-left">Invoice No</th>
-                  <th className="px-4 py-3 text-left">Call Ref</th>
-                  <th className="px-4 py-3 text-left">Amount</th>
-                  <th className="px-4 py-3 text-left">Period</th>
-                  <th className="px-4 py-3 text-left">Status</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-ink/5">
-                {pendingInvoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-ink/5 transition-colors">
-                    <td className="px-4 py-3 font-medium text-ink">
-                      {inv.id}
-                      <div className="text-xs text-ink/40">{inv.owner}</div>
-                    </td>
-                    <td className="px-4 py-3 text-ink/80">
-                      <div>{inv.vessel}</div>
-                      <div className="text-xs text-ink/40">{inv.callNo}</div>
-                    </td>
-                    <td className="px-4 py-3 font-medium text-ink">
-                      {formatCurrency(inv.amount)}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-ink/60">
-                      Due: {inv.dueDate}
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge tone={inv.status === "PENDING" ? "warning" : "neutral"}>
-                        {inv.status}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      {canManage && (
-                        <button
-                          className="btn-secondary text-xs"
-                          onClick={() => setModal({ open: true, invoice: inv })}
-                        >
-                          Mark Paid
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-                {pendingInvoices.length === 0 && (
-                  <tr>
-                    <td colSpan={6} className="px-4 py-8 text-center text-ink/50 bg-success/5 rounded-lg">
-                      Great job! No outstanding invoices.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <Table
+            data={pendingInvoices}
+            keyExtractor={(inv) => inv.id}
+            columns={[
+              {
+                header: "Invoice No",
+                accessor: (inv) => (
+                  <div>
+                    <div className="font-medium text-ink">{inv.id}</div>
+                    <div className="text-xs text-ink/40">{inv.owner}</div>
+                  </div>
+                )
+              },
+              {
+                header: "Call Ref",
+                accessor: (inv) => (
+                  <div>
+                    <div className="text-ink/80">{inv.vessel}</div>
+                    <div className="text-xs text-ink/40">{inv.callNo}</div>
+                  </div>
+                )
+              },
+              { header: "Amount", accessor: (inv) => <span className="font-medium text-ink">{formatCurrency(inv.amount)}</span> },
+              { header: "Period", accessor: (inv) => <span className="text-xs text-ink/60">Due: {inv.dueDate}</span> },
+              {
+                header: "Status",
+                accessor: (inv) => (
+                  <Badge tone={inv.status === "PENDING" ? "warning" : "neutral"}>
+                    {inv.status}
+                  </Badge>
+                )
+              },
+              {
+                header: "Actions",
+                accessor: (inv) => (
+                  <div className="flex justify-end">
+                    {canManage && (
+                      <button
+                        className="btn-secondary text-xs"
+                        onClick={() => setModal({ open: true, invoice: inv })}
+                      >
+                        Mark Paid
+                      </button>
+                    )}
+                  </div>
+                ),
+                className: "text-right"
+              }
+            ]}
+            emptyMessage="Great job! No outstanding invoices."
+          />
         </Card>
 
         {/* Payment Confirmation Modal */}

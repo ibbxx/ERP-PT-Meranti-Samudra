@@ -8,6 +8,7 @@ import PageShell from "@/components/PageShell";
 import Modal from "@/components/Modal";
 import type { LogisticsRequest, LogisticsStatus } from "@/data/mock";
 import { externalParties } from "@/data/mock";
+import Table from "@/components/Table";
 import { useLogistics } from "@/hooks/useLogistics";
 import { usePermission } from "@/hooks/usePermission";
 import { Permissions, getRoleLabel } from "@/types/rbac";
@@ -127,74 +128,76 @@ export default function Page() {
             )}
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-y-3 text-sm">
-              <thead className="text-xs uppercase tracking-[0.2em] text-ink/40">
-                <tr>
-                  <th className="px-4 py-2 text-left">Request</th>
-                  <th className="px-4 py-2 text-left">Item</th>
-                  <th className="px-4 py-2 text-left">Status</th>
-                  <th className="px-4 py-2 text-left">Vendor Compare</th>
-                  <th className="px-4 py-2 text-left">Delivery</th>
-                  <th className="px-4 py-2 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-ink/80">
-                {logistics.map((req) => (
-                  <tr
-                    key={req.id}
-                    className="rounded-2xl border border-white/80 bg-white/90 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <td className="px-4 py-3 font-semibold text-ink">
-                      {req.requestNo}
-                      <div className="text-xs text-ink/50">{req.branch}</div>
-                    </td>
-                    <td className="px-4 py-3">
-                      {req.item}
-                      <div className="text-xs text-ink/50">{req.quantity}</div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge tone={req.status === "DELIVERED" ? "success" : "warning"}>
-                        {req.status.replace("_", " ")}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-xs text-ink/60">
-                      {req.vendorCompare.length > 0 ? req.vendorCompare.map((vendor) => (
-                        <div key={vendor.vendorId}>
-                          {vendorMap.get(vendor.vendorId)} · Rp{" "}
-                          {vendor.price.toLocaleString("id-ID")}
-                        </div>
-                      )) : "No vendors yet"}
-                    </td>
-                    <td className="px-4 py-3 text-xs text-ink/60">
-                      {req.deliveryStatus}
-                      {req.deliveryEta !== "-" && ` · ETA ${req.deliveryEta}`}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <button
-                        className="btn-secondary text-xs"
-                        onClick={() => openUpdateModal(req)}
-                        disabled={!canManage}
-                        title={!canManage ? "No permission" : undefined}
-                      >
-                        Update
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                {logistics.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={6}
-                      className="rounded-2xl border border-dashed border-ink/20 bg-white/70 p-6 text-center text-sm text-ink/60"
+          <Table
+            data={logistics}
+            keyExtractor={(req) => req.id}
+            columns={[
+              {
+                header: "Request",
+                accessor: (req) => (
+                  <div>
+                    <div className="font-semibold text-ink">{req.requestNo}</div>
+                    <div className="text-xs text-ink/50">{req.branch}</div>
+                  </div>
+                )
+              },
+              {
+                header: "Item",
+                accessor: (req) => (
+                  <div>
+                    {req.item}
+                    <div className="text-xs text-ink/50">{req.quantity}</div>
+                  </div>
+                )
+              },
+              {
+                header: "Status",
+                accessor: (req) => (
+                  <Badge tone={req.status === "DELIVERED" ? "success" : "warning"}>
+                    {req.status.replace("_", " ")}
+                  </Badge>
+                )
+              },
+              {
+                header: "Vendor Compare",
+                accessor: (req) => (
+                  <div className="text-xs text-ink/60">
+                    {req.vendorCompare.length > 0 ? req.vendorCompare.map((vendor) => (
+                      <div key={vendor.vendorId}>
+                        {vendorMap.get(vendor.vendorId)} · Rp {vendor.price.toLocaleString("id-ID")}
+                      </div>
+                    )) : "No vendors yet"}
+                  </div>
+                )
+              },
+              {
+                header: "Delivery",
+                accessor: (req) => (
+                  <div className="text-xs text-ink/60">
+                    {req.deliveryStatus}
+                    {req.deliveryEta !== "-" && ` · ETA ${req.deliveryEta}`}
+                  </div>
+                )
+              },
+              {
+                header: "Actions",
+                accessor: (req) => (
+                  <div className="flex justify-end">
+                    <button
+                      className="btn-secondary text-xs"
+                      onClick={() => openUpdateModal(req)}
+                      disabled={!canManage}
+                      title={!canManage ? "No permission" : undefined}
                     >
-                      No logistics requests yet.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                      Update
+                    </button>
+                  </div>
+                ),
+                className: "text-right"
+              }
+            ]}
+            emptyMessage="No logistics requests yet."
+          />
         </Card>
 
         {/* Create Modal */}
