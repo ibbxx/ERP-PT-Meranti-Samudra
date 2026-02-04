@@ -115,7 +115,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_APPROVALS,
       Permissions.MENU_INVOICE_KELUAR,
       Permissions.MENU_OUTSTANDING,
-      Permissions.MENU_REPORTS
+      Permissions.MENU_REPORTS,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_APPROVE_SMALL,
@@ -129,7 +130,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_CALLS,
       Permissions.MENU_CALL_DETAIL,
       Permissions.MENU_DOCUMENTS,
-      Permissions.MENU_DAILY_REPORT
+      Permissions.MENU_DAILY_REPORT,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_CALL_UPDATE_STATUS,
@@ -144,7 +146,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_CALLS,
       Permissions.MENU_CALL_DETAIL,
       Permissions.MENU_REQUEST_NEEDS,
-      Permissions.MENU_DOCUMENTS
+      Permissions.MENU_DOCUMENTS,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_CALL_UPDATE_STATUS,
@@ -159,7 +162,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_CALL_DETAIL,
       Permissions.MENU_DOCUMENTS,
       Permissions.MENU_DAILY_REPORT,
-      Permissions.MENU_TIME_SHEET_NOR
+      Permissions.MENU_TIME_SHEET_NOR,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_DOC_UPLOAD,
@@ -171,7 +175,8 @@ export const rbac: Record<Role, RbacEntry> = {
   FIELD_SUPPORT: {
     menus: [
       Permissions.MENU_TASKS_LAPANGAN,
-      Permissions.MENU_DELIVERY_TRACKING
+      Permissions.MENU_DELIVERY_TRACKING,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_DELIVERY_UPDATE,
@@ -183,7 +188,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_CASHFLOW,
       Permissions.MENU_FUND_REQUEST,
       Permissions.MENU_INVOICE_MASUK,
-      Permissions.MENU_COST_CONTROL
+      Permissions.MENU_COST_CONTROL,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_COST_ADD,
@@ -199,7 +205,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_TAXES,
       Permissions.MENU_INVOICE_KELUAR,
       Permissions.MENU_OUTSTANDING,
-      Permissions.MENU_ARCHIVE
+      Permissions.MENU_ARCHIVE,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_INVOICE_CREATE,
@@ -212,7 +219,8 @@ export const rbac: Record<Role, RbacEntry> = {
     menus: [
       Permissions.MENU_PENAWARAN_DRAFT,
       Permissions.MENU_SPK_DRAFT,
-      Permissions.MENU_ARCHIVE
+      Permissions.MENU_ARCHIVE,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_CALL_CREATE,
@@ -226,7 +234,8 @@ export const rbac: Record<Role, RbacEntry> = {
       Permissions.MENU_VENDOR_COMPARE,
       Permissions.MENU_PURCHASE,
       Permissions.MENU_DELIVERY,
-      Permissions.MENU_LOGISTICS_COST
+      Permissions.MENU_LOGISTICS_COST,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_VENDOR_COMPARE_EDIT,

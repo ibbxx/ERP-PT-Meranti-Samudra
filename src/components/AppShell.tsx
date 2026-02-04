@@ -5,7 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Squares2X2Icon,
-  ArrowRightOnRectangleIcon
+  ArrowRightOnRectangleIcon,
+  BookOpenIcon
 } from "@heroicons/react/24/outline";
 import { menuGroups } from "@/lib/menu";
 import type { Permission, Role } from "@/types/rbac";
@@ -111,6 +112,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-ink/5 bg-white">
+          <Link
+            href="/guide"
+            className="flex items-center gap-3 px-3 py-2 mb-4 rounded-lg text-sm font-medium bg-ocean/5 text-ocean hover:bg-ocean/10 transition-colors"
+          >
+            <BookOpenIcon className="h-5 w-5" />
+            Help & Guide
+          </Link>
+
           <div className="flex items-center gap-3 px-2 mb-3">
             <div className="h-8 w-8 rounded-full bg-ink/10 flex items-center justify-center text-xs font-bold text-ink">
               {name.charAt(0)}
