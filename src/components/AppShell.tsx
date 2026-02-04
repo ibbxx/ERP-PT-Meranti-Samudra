@@ -5,46 +5,21 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Squares2X2Icon,
-  DocumentTextIcon,
-  ClipboardDocumentCheckIcon,
-  BanknotesIcon,
-  TruckIcon,
-  WrenchScrewdriverIcon,
   ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
+import { menuItems } from "@/lib/menu";
+import type { Permission, Role } from "@/types/rbac";
+import { hasMenuPermission } from "@/types/rbac";
 
-const menus = [
-  {
-    label: "Main",
-    items: [
-      { href: "/dashboard", label: "Dashboard", icon: Squares2X2Icon },
-    ]
-  },
-  {
-    label: "Operational",
-    items: [
-      { href: "/calls", label: "Active Calls", icon: DocumentTextIcon },
-      { href: "/tasks-lapangan", label: "Field Tasks", icon: WrenchScrewdriverIcon },
-      { href: "/logistics", label: "Logistics", icon: TruckIcon },
-    ]
-  },
-  {
-    label: "Finance",
-    items: [
-      { href: "/approvals", label: "Approvals", icon: ClipboardDocumentCheckIcon },
-      { href: "/fund-request", label: "Fund Requests", icon: BanknotesIcon },
-      { href: "/invoice-outstanding", label: "Invoices", icon: DocumentTextIcon },
-    ]
-  }
-];
+
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [role, setRole] = useState("Guest");
   const [name, setName] = useState("Guest");
-  // Default to false for mobile-first approach. Desktop will override via CSS.
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [today, setToday] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -57,6 +32,15 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     } catch {
       // ignore
     }
+
+    setToday(
+      new Date().toLocaleDateString("id-ID", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      })
+    );
   }, []);
 
   // Close sidebar on route change for mobile
@@ -70,6 +54,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     }
     router.push("/login");
   };
+
+  const hasAccess = (permission: Permission) => {
+    if (!role || role === "Guest") return false;
+    return hasMenuPermission(role as Role, permission);
+  };
+
+  const visibleItems = menuItems.filter((item) => hasAccess(item.permission));
 
   return (
     <div className="flex min-h-screen bg-sand/20">
@@ -97,32 +88,32 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </button>
         </div>
 
-        <nav className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-4rem)]">
-          {menus.map((section) => (
-            <div key={section.label}>
-              <div className="text-xs font-bold uppercase tracking-wider text-ink/30 mb-3 px-2">
-                {section.label}
-              </div>
-              <div className="space-y-1">
-                {section.items.map((item) => {
-                  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${active
-                        ? "bg-ink text-white"
-                        : "text-ink/60 hover:bg-ink/5 hover:text-ink"
-                        }`}
-                    >
-                      <item.icon className="h-5 w-5" />
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
+        <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-9rem)]">
+          <div className="text-xs font-bold uppercase tracking-wider text-ink/30 mb-3 px-2">
+            Menu
+          </div>
+          {visibleItems.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${active
+                  ? "bg-ink text-white"
+                  : "text-ink/60 hover:bg-ink/5 hover:text-ink"
+                  }`}
+              >
+                {/* We don't have icons in menuItems currently, so we use a generic dot or maybe just text */}
+                <div className={`h-1.5 w-1.5 rounded-full ${active ? "bg-white" : "bg-ink/40"}`} />
+                {item.label}
+              </Link>
+            );
+          })}
+          {visibleItems.length === 0 && (
+            <div className="px-3 py-2 text-xs text-ink/40 italic">
+              No menus available.
             </div>
-          ))}
+          )}
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-ink/5 bg-white">
