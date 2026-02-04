@@ -54,7 +54,8 @@ export const Permissions = {
   MENU_ARCHIVE: "MENU_ARCHIVE",
   MENU_PENAWARAN_DRAFT: "MENU_PENAWARAN_DRAFT",
   MENU_SPK_DRAFT: "MENU_SPK_DRAFT",
-  MENU_COST_CONTROL: "MENU_COST_CONTROL", // Added as alias for Costs view
+  MENU_COST_CONTROL: "MENU_COST_CONTROL",
+  MENU_GUIDE: "MENU_GUIDE", // Documentation
 
   // Actions
   ACTION_CALL_CREATE: "ACTION_CALL_CREATE",
@@ -97,7 +98,8 @@ export const rbac: Record<Role, RbacEntry> = {
     menus: [
       Permissions.MENU_DASHBOARD,
       Permissions.MENU_APPROVALS,
-      Permissions.MENU_REPORTS
+      Permissions.MENU_REPORTS,
+      Permissions.MENU_GUIDE
     ],
     actions: [
       Permissions.ACTION_APPROVE_LARGE,

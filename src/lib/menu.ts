@@ -17,6 +17,7 @@ export const menuGroups: MenuGroup[] = [
     label: "Main",
     items: [
       { label: "Dashboard", href: "/dashboard", permission: Permissions.MENU_DASHBOARD },
+      { label: "User Guide", href: "/guide", permission: Permissions.MENU_GUIDE },
     ]
   },
   {
