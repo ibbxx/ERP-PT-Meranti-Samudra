@@ -1,6 +1,5 @@
 "use client";
 
-import PageHeader from "@/components/PageHeader";
 import { roleData } from "@/lib/roleData";
 import {
     BookOpenIcon,
@@ -33,7 +32,7 @@ export default function GuidePage() {
                 <p className="text-base leading-relaxed text-ink/70 max-w-3xl">
                     This document serves as the single source of truth for the PT MPS Enterprise Resource Planning (ERP) system.
                     It details the end-to-end workflows connecting Commercial, Operational, Logistics, and Financial divisions
-                    into a unified "Port Call" lifecycle.
+                    into a unified &quot;Port Call&quot; lifecycle.
                 </p>
             </div>
 
@@ -46,7 +45,7 @@ export default function GuidePage() {
 
                 <div className="grid md:grid-cols-2 gap-8">
                     <div className="prose prose-sm prose-ink">
-                        <h3 className="text-lg font-bold">The "Call" Entity</h3>
+                        <h3 className="text-lg font-bold">The &quot;Call&quot; Entity</h3>
                         <p>
                             The core atomic unit of this ERP is the <strong>Call</strong> (Port Call). Every operational activity must be linked to a specific Call ID (e.g., <em>MPS-SUB-24-001</em>).
                         </p>
@@ -96,7 +95,7 @@ export default function GuidePage() {
 
                 <div className="space-y-6">
                     <p className="text-ink/70 max-w-3xl">
-                        The Agency module manages the vessel's physical presence in the port.
+                        The Agency module manages the vessel&apos;s physical presence in the port.
                         This workflow is heavily integrated with government systems like <strong>Inaportnet</strong>.
                     </p>
 
@@ -164,7 +163,7 @@ export default function GuidePage() {
                             <tr className="hover:bg-sand/5">
                                 <td className="px-6 py-4 font-mono text-xs uppercase font-bold text-orange-600">FUND_SUBMIT</td>
                                 <td className="px-6 py-4">Request money to buy the item.</td>
-                                <td className="px-6 py-4">Auto-creates a 'Fund Request' for Finance.</td>
+                                <td className="px-6 py-4">Auto-creates a &apos;Fund Request&apos; for Finance.</td>
                             </tr>
                             <tr className="hover:bg-sand/5">
                                 <td className="px-6 py-4 font-mono text-xs uppercase font-bold text-orange-600">DELIVERING</td>
@@ -280,7 +279,13 @@ export default function GuidePage() {
     );
 }
 
-function CardSteps({ step, title, points }: any) {
+interface CardStepsProps {
+    step: string;
+    title: string;
+    points: string[];
+}
+
+function CardSteps({ step, title, points }: CardStepsProps) {
     return (
         <div className="p-6 rounded-xl border border-ink/10 bg-white">
             <div className="text-xs font-bold font-mono text-ink/30 mb-2">STAGE {step}</div>
